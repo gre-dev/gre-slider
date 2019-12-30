@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GRE Slider</title>
+</head>
+<body>
+
+<div id="gre-slider">
+    <div id="per-gre-slider" data-img="https://cdn.pixabay.com/photo/2014/07/10/10/20/golden-gate-bridge-388917_960_720.jpg"></div>
+    <div id="per-gre-slider" data-img="https://cdn.pixabay.com/photo/2014/09/10/00/59/utah-440520_960_720.jpg"></div>
+    <div id="per-gre-slider" data-img="https://cdn.pixabay.com/photo/2013/11/28/10/36/road-220058_960_720.jpg"></div>
+    <div id="per-gre-slider" data-img="https://cdn.pixabay.com/photo/2015/03/26/09/47/sky-690293_960_720.jpg"></div>
+    <div id="per-gre-slider" data-img="https://cdn.pixabay.com/photo/2013/10/02/23/03/dawn-190055_960_720.jpg"></div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/gre-slider.js"></script>
+<script>
+$(document).ready(() => {
+    $('#gre-slider').greSlider({
+        color: '#d63838',
+        height: 300,
+        borderRadius: 2,
+        fullscreen: false,
+        width: 700,
+        height: 400,
+        theme: 'default',
+        effect: 'ripple',
+        autoPlay: true,
+        delay: 2000
+    });
+});
+</script>
+</body>
+</html>
