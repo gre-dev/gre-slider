@@ -38,7 +38,7 @@ then we will add our slider code and place it anywhere we want, the stracture of
 
 ````html5
 <div id="gre-slider">
-	<div id="per-gre-slider" data-img="images/golden-gate-bridge.jpg"></div>
+    <div id="per-gre-slider" data-img="images/golden-gate-bridge.jpg"></div>
     <div id="per-gre-slider" data-img="images/utah.jpg"></div>
     <div id="per-gre-slider" data-img="images/road.jpg"></div>
     <div id="per-gre-slider" data-img="images/sky.jpg"></div>
