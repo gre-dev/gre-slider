@@ -13,7 +13,7 @@
             fullscreen: true,
             height: 500,
             borderRadius: 3,
-            effect: 'fadeIn',
+            animation: 'fadeIn',
             delay: 1000,
             dots: true,
             arrowColor: '#ccc',
@@ -30,7 +30,7 @@
 
         return this.each(() => {
             var imgs = [];
-            var effects = ['fadeIn','none','slideTop','slideBottom','slideLeft','slideRight','ripple','rotation','theater','slideTheater','triangle'];
+            var animations = ['fadeIn','none','slideTop','slideBottom','slideLeft','slideRight','ripple','rotation','theater','slideTheater','triangle'];
             var themes = ['default','inlineBottom'];
 
             if ($.isFunction(settings.done)) {
@@ -64,8 +64,8 @@
                 status = false;
             }
 
-            if (!effects.includes(settings.effect)){
-                console.error('"effect" option is not valid!');
+            if (!animations.includes(settings.animation)){
+                console.error('"animation" option is not valid!');
                 status = false;
             }
 
@@ -89,8 +89,8 @@
                 status = false;
             }
 
-            if (settings.effect != 'ripple' && settings.rippleColor != '#FFF'){
-                console.warn('There is no need to change the "rippleColor" value if you\'re not using "ripple" effect.');
+            if (settings.animation != 'ripple' && settings.rippleColor != '#FFF'){
+                console.warn('There is no need to change the "rippleColor" value if you\'re not using "ripple" animation.');
             }
 
             if (status) {
@@ -104,7 +104,7 @@
 
                     $(this).attr('data-num', imgcountment);
 
-                    if (settings.effect == 'fadeIn'){
+                    if (settings.animation == 'fadeIn'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -114,7 +114,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'none'){
+                    }else if (settings.animation == 'none'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -124,7 +124,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'slideTop'){
+                    }else if (settings.animation == 'slideTop'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -134,7 +134,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'slideBottom'){
+                    }else if (settings.animation == 'slideBottom'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -144,7 +144,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'slideRight'){
+                    }else if (settings.animation == 'slideRight'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -154,7 +154,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'slideLeft'){
+                    }else if (settings.animation == 'slideLeft'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -164,7 +164,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'ripple'){
+                    }else if (settings.animation == 'ripple'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -174,7 +174,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'rotation'){
+                    }else if (settings.animation == 'rotation'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -184,7 +184,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'theater'){
+                    }else if (settings.animation == 'theater'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -194,7 +194,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'slideTheater'){
+                    }else if (settings.animation == 'slideTheater'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -204,7 +204,7 @@
                         $(this).css('background-size','cover');
                         $(this).css('background-repeat','no-reapeat');
                         $(this).css('background-image','url('+perimg+')');
-                    }else if (settings.effect == 'triangle'){
+                    }else if (settings.animation == 'triangle'){
                         $(this).css('position','absolute');
                         $(this).css('width','100%');
                         $(this).css('height','100%');
@@ -217,25 +217,25 @@
                     }
                 });
 
-                if (settings.effect == 'fadeIn'){
+                if (settings.animation == 'fadeIn'){
                     $(this).children('#per-gre-slider').css('display', 'none');
                     $(this).children('#per-gre-slider').css('z-index', '1');
-                }else if (settings.effect == 'none'){
+                }else if (settings.animation == 'none'){
                     $(this).children('#per-gre-slider').css('display', 'none');
                     $(this).children('#per-gre-slider').css('z-index', '1');
-                }else if (settings.effect == 'slideTop'){
+                }else if (settings.animation == 'slideTop'){
                     $(this).children('#per-gre-slider:first-child').css('bottom', '0%');
                     $(this).children('#per-gre-slider').css('z-index', '1');
-                }else if (settings.effect == 'slideBottom'){
+                }else if (settings.animation == 'slideBottom'){
                     $(this).children('#per-gre-slider:first-child').css('top', '0%');
                     $(this).children('#per-gre-slider').css('z-index', '1');
-                }else if (settings.effect == 'slideRight'){
+                }else if (settings.animation == 'slideRight'){
                     $(this).children('#per-gre-slider:first-child').css('left', '0%');
                     $(this).children('#per-gre-slider').css('z-index', '1');
-                }else if (settings.effect == 'slideLeft'){
+                }else if (settings.animation == 'slideLeft'){
                     $(this).children('#per-gre-slider:first-child').css('right', '0%');
                     $(this).children('#per-gre-slider').css('z-index', '1');
-                }else if (settings.effect == 'ripple'){
+                }else if (settings.animation == 'ripple'){
                     $(this).children('#per-gre-slider').css('display', 'none');
                     $(this).children('#per-gre-slider').css('z-index', '1');
                     $(this).append('<div id="ripple"></div>');
@@ -248,21 +248,21 @@
                     $(this).find('#ripple').css('height', '0vw');
                     $(this).find('#ripple').css('border-radius', '200%');
                     $(this).find('#ripple').css('background-color', settings.rippleColor);
-                }else if (settings.effect == 'rotation'){
+                }else if (settings.animation == 'rotation'){
                     $(this).children('#per-gre-slider').css('z-index', '1');
-                }else if (settings.effect == 'theater'){
-                    $(this).children('#per-gre-slider').css('z-index', '1');
-                    $(this).children('#per-gre-slider:first-child').css('z-index', '2');
-                    $(this).children('#per-gre-slider').attr('data-istheater', 'no');
-                    $(this).children('#per-gre-slider:first-child').attr('data-istheater', 'yes');
-                    $(this).children('#per-gre-slider').css('clip-path', 'polygon(0% 0%, 100% 0%, 100% 70%, 100% 100%, 0% 100%)')
-                }else if (settings.effect == 'slideTheater'){
+                }else if (settings.animation == 'theater'){
                     $(this).children('#per-gre-slider').css('z-index', '1');
                     $(this).children('#per-gre-slider:first-child').css('z-index', '2');
                     $(this).children('#per-gre-slider').attr('data-istheater', 'no');
                     $(this).children('#per-gre-slider:first-child').attr('data-istheater', 'yes');
                     $(this).children('#per-gre-slider').css('clip-path', 'polygon(0% 0%, 100% 0%, 100% 70%, 100% 100%, 0% 100%)')
-                }else if (settings.effect == 'triangle'){
+                }else if (settings.animation == 'slideTheater'){
+                    $(this).children('#per-gre-slider').css('z-index', '1');
+                    $(this).children('#per-gre-slider:first-child').css('z-index', '2');
+                    $(this).children('#per-gre-slider').attr('data-istheater', 'no');
+                    $(this).children('#per-gre-slider:first-child').attr('data-istheater', 'yes');
+                    $(this).children('#per-gre-slider').css('clip-path', 'polygon(0% 0%, 100% 0%, 100% 70%, 100% 100%, 0% 100%)')
+                }else if (settings.animation == 'triangle'){
                     $(this).children('#per-gre-slider').css('z-index', '1');
                     $(this).children('#per-gre-slider:first-child').css('z-index', '2');
                     $(this).children('#per-gre-slider').attr('data-istheater', 'no');
@@ -487,38 +487,38 @@
                     currentslider = num;
                     var currentimg = 1;
 
-                    if (settings.effect == 'fadeIn'){
+                    if (settings.animation == 'fadeIn'){
                         main.children('#per-gre-slider').fadeOut(1000);
                         main.children('#per-gre-slider:nth-child('+currentslider+')').fadeIn(500);
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'none'){
+                    }else if (settings.animation == 'none'){
                         main.children('#per-gre-slider').fadeOut(1);
                         main.children('#per-gre-slider:nth-child('+currentslider+')').fadeIn(1);
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'slideTop'){
+                    }else if (settings.animation == 'slideTop'){
                         main.children('#per-gre-slider').stop(true, true).delay(1000).css('z-index','1').animate({bottom: '100%'}, 1);
                         main.children('#per-gre-slider:nth-child('+currentslider+')').stop(true, true).css('z-index','2').animate({bottom: '0%'}, 300);
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'slideLeft'){
+                    }else if (settings.animation == 'slideLeft'){
                         main.children('#per-gre-slider').stop(true, true).delay(1000).css('z-index','1').animate({right: '100%'}, 1);
                         main.children('#per-gre-slider:nth-child('+(currentslider-1)+')').stop(true, true).css('z-index','2').animate({right: '0%'}, 200);
                         main.children('#per-gre-slider:nth-child('+currentslider+')').stop(true, true).css('z-index','2').animate({right: '0%'}, 200);
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'slideRight'){
+                    }else if (settings.animation == 'slideRight'){
                         main.children('#per-gre-slider[data-num!="'+currentslider+'"]').stop(true, true).delay(1500).css('z-index','1').animate({left: '100%'}, 1);
                         main.children('#per-gre-slider:nth-child('+currentslider+')').stop(true, true).css('z-index','2').animate({left: '0%'}, 300);
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'slideBottom'){
+                    }else if (settings.animation == 'slideBottom'){
                         main.children('#per-gre-slider').stop(true, true).delay(1000).css('z-index','1').animate({top: '100%'}, 1);
                         main.children('#per-gre-slider:nth-child('+currentslider+')').stop(true, true).css('z-index','2').animate({top: '0%'}, 300);
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'ripple'){
+                    }else if (settings.animation == 'ripple'){
                         var randtohandred = Math.floor(Math.random() * 101);
                         main.find('#ripple').animate({width: (main.width() * 3)+'px', height: (main.width() * 3)+'px', top: randtohandred+'%', left: randtohandred+'%'}, 400);
                         main.children('#per-gre-slider').delay(400).fadeOut(10);
@@ -526,7 +526,7 @@
                         main.find('#ripple').animate({width: '0%', height: '0%'}, 400);
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'rotation'){
+                    }else if (settings.animation == 'rotation'){
                         main.children('#per-gre-slider').css('z-index','1');
                         main.children('#per-gre-slider:nth-child('+currentslider+')').animate({width: '200%', height: '200%', left: '-50%', top: '-50%'}, 300);
                         main.children('#per-gre-slider:nth-child('+currentslider+')').css('z-index','2');
@@ -543,7 +543,7 @@
                         main.children('#per-gre-slider').css('transform','rotate(0deg)');
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'theater'){
+                    }else if (settings.animation == 'theater'){
                         var targetimg = num;
                         
                         for (var i=1;i<=totalsliders;i++){
@@ -572,7 +572,7 @@
 
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'slideTheater'){
+                    }else if (settings.animation == 'slideTheater'){
                         var targetimg = num;
                         
                         for (var i=1;i<=totalsliders;i++){
@@ -601,7 +601,7 @@
 
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
-                    }else if (settings.effect == 'triangle'){
+                    }else if (settings.animation == 'triangle'){
                         var targetimg = num;
                         
                         for (var i=1;i<=totalsliders;i++){
