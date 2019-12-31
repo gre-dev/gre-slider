@@ -2,12 +2,12 @@
 ![](https://lh3.googleusercontent.com/E7jYw1ML30w3JGfU5S6Mm7JXUd2-gLSHL4iZ_6r5yLyuyMKpFLDweN1dcfSfIWKHBgN4a8SfR2Vh4IwNc3zS=w1600-h789)
 <br><br>
 
-### Description
+## Description
 This project made especially for making image slider feature easier. By giving a lightweight plugin for developers to customize almost any image slider they want.
 
 <br>
 
-### Features
+## Features
 
 - Support all browsers and devices.
 - SEO-Friendly.
@@ -21,12 +21,12 @@ This project made especially for making image slider feature easier. By giving a
 
 <br>
 
-### Requirements
+## Requirements
 - Jquery
 
 <br>
 
-### Get Started
+## Get Started
 All you need to install this plugin is to include **Jquery** and **gre-slider.min.js**, before the closing of **body** tag of the page (`</body>`) as shown below:
 
 ````html5
@@ -65,7 +65,7 @@ Now the slider is ready to run on your page!
 
 <br>
 
-### Options
+## Options
 You can use the following options as you need:
 
 | Option  | Type | Default Value  | Description |
@@ -89,7 +89,7 @@ You can use the following options as you need:
 | onLoad | Function | null | You can set a function for this option to let you know when the slider has fully loaded. |
 <br>
 
-### Browsers
+## Browsers
 GRE Slider has been tested on the following browsers:
 - Google Chrome
 - Mozilla Firefox
@@ -98,5 +98,5 @@ GRE Slider has been tested on the following browsers:
 
 <br>
 
-### Credits
+## Credits
 GRE Slider was made by [Ghadeer R. Majeed](https://github.com/ghadeerraad "Ghadeer R. Majeed") from [GRE Development](https://www.gredev.net/en "GRE Development") under [MIT License](https://github.com/gre-dev/gre-slider/blob/master/LICENSE "MIT License").
