@@ -71,7 +71,7 @@ You can use the following options as you need:
 | Option  | Type | Default Value  | Description |
 |:------------|:------------:|:---------------:|:-----|
 | fullscreen | Boolean | true | Let the slider take the full width of the container |
-| width | Int | 700 | The width of the slider (in pixles). <br></br(if>(if **fullscreen** is **true** this option will be ignored). |
+| width | Int | 700 | The width of the slider (in pixles). <br><br>(if **fullscreen** is **true** this option will be ignored). |
 | height | Int | 500 | The height of the slider (in pixles). |
 | borderRadius | Int | 3 | The **border-radius** of the slider |
 | animation | String | 'fadeIn' | The animation of slider.<br>  You can use these animations:<br> (none, fadeIn, slideTop, slideBottom, slideLeft, slideRight, ripple, rotation, theater, slideTheater, triangle). |
