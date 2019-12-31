@@ -71,20 +71,22 @@ You can use the following options as you need:
 | Option  | Type | Default Value  | Description |
 |:------------|:------------:|:---------------:|:-----|
 | fullscreen | Boolean | true | Let the slider take the full width of the container |
-| width | Int | null | The width of the slider (in pixles). <br></br(if>(if **fullscreen** is **true** this option will be ignored). |
+| width | Int | 700 | The width of the slider (in pixles). <br></br(if>(if **fullscreen** is **true** this option will be ignored). |
 | height | Int | 500 | The height of the slider (in pixles). |
 | borderRadius | Int | 3 | The **border-radius** of the slider |
 | animation | String | 'fadeIn' | The animation of slider.<br>  You can use these animations:<br> (none, fadeIn, slideTop, slideBottom, slideLeft, slideRight, ripple, rotation, theater, slideTheater, triangle). |
 | delay | Int | 1000 | Time (in millisecons) to wait before changing to the next slide. |
 | dots | Boolean | true | Show the pagination over the slider. |
 | dotsColor | String | '#ccc' | Change the color of pagination.  |
+| dotsStyle | String | 'circle' | The dot shape style.<br>You can set one of the following:<br>(circle, dash, square)  |
+| dotsPosition | String | 'bottomLeft' | The position of the pagination of the slider.<br>You can set one of the following:<br>(topLeft, topRight, bottomRight, bottomLeft, middleTop, middleBottom)  |
 | selectedDotsColor | String | '#9e9e9e' | Change the color of the current slide dot. |
 | arrowColor | String | '#ccc' | Change the color of left & right arrows. |
+| arrowsPosition | String | 'middleSides' | The position of navigation arrows of the slider.<br>You can set one of the following:<br>(topSides, middleSides, bottomSides, topLeft, topRight, bottomLeft, bottomRight) |
 | rippleColor | String | '#FFF' | Change the color of the **ripple** animation (it will be ignored if your animation is not **ripple**). |
 | keyboard | Boolean | false | Enable left & right arrows of the keyboard to change the sliders. |
-| theme | String | 'default' | The theme of the slider.<br> You can use the following themes:<br>(default, inlineBottom) |
 | autoPlay | Boolean | false | If you set this option to **true** the slider will start navigating automatically |
-| done | Function | null | You can set a function for this option to let you know when the slider has fully loaded. |
+| onLoad | Function | null | You can set a function for this option to let you know when the slider has fully loaded. |
 <br>
 
 ### Browsers

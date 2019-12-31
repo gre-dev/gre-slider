@@ -11,19 +11,22 @@
 
         var settings = $.extend({
             fullscreen: true,
+            width: 700,
             height: 500,
             borderRadius: 3,
-            animation: 'fadeIn',
             delay: 1000,
             dots: true,
-            arrowColor: '#ccc',
+            dotsStyle: 'circle',
+            dotsPosition: 'bottomLeft',
             dotsColor: '#ccc',
             selectedDotsColor: '#9e9e9e',
+            arrowColor: '#ccc',
+            arrowsPosition: 'middleSides',
+            animation: 'fadeIn',
             rippleColor: '#FFF',
             keyboard: false,
-            theme: 'default',
             autoPlay: false,
-            done: null
+            onLoad: null
         }, options);
 
         var status = true;
@@ -31,16 +34,9 @@
         return this.each(() => {
             var imgs = [];
             var animations = ['fadeIn','none','slideTop','slideBottom','slideLeft','slideRight','ripple','rotation','theater','slideTheater','triangle'];
-            var themes = ['default','inlineBottom'];
-
-            if ($.isFunction(settings.done)) {
-                settings.done.call(this);
-            } else {
-                if (settings.done != null) {
-                    console.error('"done" option should be a function.');
-                    status = false;
-                }
-            }
+            var dotsStyles = ['circle','dash','square'];
+            var dotsPositions = ['topLeft','topRight','bottomRight','bottomLeft','middleTop','middleBottom'];
+            var arrowsPositions = ['middleSides','topSides','bottomSides','topRight','topLeft','bottomRight','bottomLeft'];
 
             if (!settings.fullscreen){
                 if (!settings.width){
@@ -74,11 +70,6 @@
                 status = false;
             }
 
-            if (!themes.includes(settings.theme)){
-                console.error('"theme" option is not valid.');
-                status = false;
-            }
-
             if (settings.keyboard && settings.autoPlay){
                 console.error('You cannot set "true" to both "keyboard" and "autoPlay".');
                 status = false;
@@ -93,11 +84,36 @@
                 console.warn('There is no need to change the "rippleColor" value if you\'re not using "ripple" animation.');
             }
 
+            if (!dotsStyles.includes(settings.dotsStyle)){
+                console.error('"dotsStyle" option is not valid.');
+                status = false;
+            }
+
+            if (!dotsPositions.includes(settings.dotsPosition)){
+                console.error('"dotsPosition" option is not valid.');
+                status = false;
+            }
+
+            if (!arrowsPositions.includes(settings.arrowsPosition)){
+                console.error('"arrowsPosition" option is not valid.');
+                status = false;
+            }
+
+            if ($.isFunction(settings.onLoad)) {
+                if (status){
+                    settings.onLoad.call(this);
+                }
+            } else {
+                if (settings.onLoad != null) {
+                    console.error('"onLoad" option should be a function.');
+                    status = false;
+                }
+            }
+
             if (status) {
                 var imgcountment = 0;
                 var mainSlider = $(this);
                 $(this).children().each(function (e) {
-                    var realCurrentSlider = 1;
                     var perimg = $(this).attr('data-img');
                     imgs.push(perimg);
                     imgcountment++;
@@ -244,9 +260,11 @@
                     $(this).find('#ripple').css('top', '50%');
                     $(this).find('#ripple').css('left', '50%');
                     $(this).find('#ripple').css('transform', 'translate(-50%, -50%)');
+                    $(this).find('#ripple').css('-webkit-transform', 'translate(-50%, -50%)');
                     $(this).find('#ripple').css('width', '0vw');
                     $(this).find('#ripple').css('height', '0vw');
                     $(this).find('#ripple').css('border-radius', '200%');
+                    $(this).find('#ripple').css('-webkit-border-radius', '200%');
                     $(this).find('#ripple').css('background-color', settings.rippleColor);
                 }else if (settings.animation == 'rotation'){
                     $(this).children('#per-gre-slider').css('z-index', '1');
@@ -281,6 +299,7 @@
                 $(this).css('height', settings.height + 'px');
                 $(this).css('background-color', '#eee');
                 $(this).css('border-radius', settings.borderRadius + 'px');
+                $(this).css('-webkit-border-radius', settings.borderRadius + 'px');
                 $(this).css('position', 'relative');
                 $(this).css('overflow', 'hidden');
                 $(this).children('#per-gre-slider:first-child').css('display', 'inline-block');
@@ -296,142 +315,155 @@
                 // Insert dots into the main <div> of the slider
                 $(this).append('<div id="gre-dots">'+dotsHTML+'</div>');
 
-                if (settings.theme == 'default'){
-                    // Dots style
-                    $(this).children('#gre-dots').css('position','absolute');
+                // Dots style
+                $(this).children('#gre-dots').css('position','absolute');
+                if (settings.dotsPosition == 'topLeft'){
+                    $(this).children('#gre-dots').css('top','15px');
+                    $(this).children('#gre-dots').css('left','20px');
+                }else if (settings.dotsPosition == 'topRight'){
+                    $(this).children('#gre-dots').css('top','15px');
+                    $(this).children('#gre-dots').css('right','20px');
+                }else if (settings.dotsPosition == 'bottomLeft'){
                     $(this).children('#gre-dots').css('bottom','15px');
                     $(this).children('#gre-dots').css('left','20px');
-                    $(this).children('#gre-dots').css('display','inline-block');
-                    $(this).children('#gre-dots').css('z-index','3');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('display','inline-block');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('padding','3.2px');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('border-radius','200px');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
-                    $(this).children('#gre-dots').children('#per-gre-dot:first-child').css('background-color', settings.selectedDotsColor);
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('margin','0 3px');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('cursor','pointer');
-
-                    // Left arrow style
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('left','20px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('top', ($(this).height() / 2 - 30)+'px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('padding','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('width','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('height','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('z-index','3');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('cursor','pointer');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('background-color',settings.arrowColor);
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('width','18px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('top','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('left','12px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('height','3px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('border-radius','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('transform','rotate(50deg)');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('background-color',settings.arrowColor);
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('width','18px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('top','18px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('left','12px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('height','3px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('border-radius','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('transform','rotate(-50deg)');
-
-                    // Left arrow style
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('right','20px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('top', ($(this).height() / 2 - 30)+'px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('padding','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('width','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('height','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('z-index','3');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('cursor','pointer');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('background-color',settings.arrowColor);
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('width','18px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('top','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('left','12px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('height','3px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('border-radius','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('transform','rotate(-50deg)');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('background-color',settings.arrowColor);
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('width','18px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('top','18px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('left','12px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('height','3px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('border-radius','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('transform','rotate(50deg)');
-                }else if (settings.theme == 'inlineBottom'){
-                    // Dots style
-                    $(this).children('#gre-dots').css('position','absolute');
-                    $(this).children('#gre-dots').css('bottom','25px');
-                    $(this).children('#gre-dots').css('left','20px');
-                    $(this).children('#gre-dots').css('display','inline-block');
-                    $(this).children('#gre-dots').css('z-index','3');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('display','inline-block');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('padding','3.2px');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('border-radius','200px');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
-                    $(this).children('#gre-dots').children('#per-gre-dot:first-child').css('background-color', settings.selectedDotsColor);
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('margin','0 3px');
-                    $(this).children('#gre-dots').children('#per-gre-dot').css('cursor','pointer');
-
-                    // Left arrow style
-                    $(this).children('#gre-arrows').css('position','absolute');
-                    $(this).children('#gre-arrows').css('bottom','15px');
-                    $(this).children('#gre-arrows').css('right','20px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('position','relative');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('padding','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('width','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('height','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('z-index','3');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('cursor','pointer');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('display','inline-block');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('margin','0 5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('background-color',settings.arrowColor);
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('width','15px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('top','28px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('left','12px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('height','3px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('border-radius','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('transform','rotate(50deg)');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('background-color',settings.arrowColor);
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('width','15px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('top','19px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('left','12px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('height','3px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('border-radius','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('transform','rotate(-50deg)');
-
-                    // Left arrow style
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('position','relative');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('padding','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('width','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('height','30px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('z-index','3');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('cursor','pointer');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('display','inline-block');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('margin','0 5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('background-color',settings.arrowColor);
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('width','15px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('top','28px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('left','12px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('height','3px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('border-radius','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('transform','rotate(-50deg)');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('position','absolute');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('background-color',settings.arrowColor);
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('width','15px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('top','19px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('left','12px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('height','3px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('border-radius','5px');
-                    $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('transform','rotate(50deg)');
+                }else if (settings.dotsPosition == 'bottomRight'){
+                    $(this).children('#gre-dots').css('bottom','15px');
+                    $(this).children('#gre-dots').css('right','20px');
+                }else if (settings.dotsPosition == 'middleTop'){
+                    $(this).children('#gre-dots').css('top','15px');
+                    $(this).children('#gre-dots').css('left','50%');
+                    $(this).children('#gre-dots').css('transform','translate(-50%, -50%)');
+                    $(this).children('#gre-dots').css('-webkit-transform','translate(-50%, -50%)');
+                }else if (settings.dotsPosition == 'middleBottom'){
+                    $(this).children('#gre-dots').css('bottom','15px');
+                    $(this).children('#gre-dots').css('left','50%');
+                    $(this).children('#gre-dots').css('transform','translate(-50%, -50%)');
+                    $(this).children('#gre-dots').css('-webkit-transform','translate(-50%, -50%)');
                 }
+                $(this).children('#gre-dots').css('display','inline-block');
+                $(this).children('#gre-dots').css('z-index','3');
+                $(this).children('#gre-dots').children('#per-gre-dot').css('display','inline-block');
+                if (settings.dotsStyle == 'circle'){
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('padding','3.2px');
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('border-radius','200px');
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('-webkit-border-radius','200px');
+                }else if (settings.dotsStyle == 'dash'){
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('padding','2px 5px');
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('border-radius','5px');
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('-webkit-border-radius','5px');
+                }else if (settings.dotsStyle == 'square'){
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('padding','3px');
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('border-radius','1px');
+                    $(this).children('#gre-dots').children('#per-gre-dot').css('-webkit-border-radius','1px');
+                }
+                $(this).children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
+                $(this).children('#gre-dots').children('#per-gre-dot:first-child').css('background-color', settings.selectedDotsColor);
+                $(this).children('#gre-dots').children('#per-gre-dot').css('margin','0 3px');
+                $(this).children('#gre-dots').children('#per-gre-dot').css('cursor','pointer');
+
+                // Left arrow style
+                $(this).children('#gre-arrows').children('#gre-arrow-left').css('position','absolute');
+                if (settings.arrowsPosition == 'middleSides'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('left','20px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('top', '50%');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('transform', 'translate(-50%, -50%)');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('-webkit-transform', 'translate(-50%, -50%)');
+                }else if (settings.arrowsPosition == 'topSides'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('left','20px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('top', '20px');
+                }else if (settings.arrowsPosition == 'bottomSides'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('left','20px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('bottom', '20px');
+                }else if (settings.arrowsPosition == 'topLeft'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('left','10px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('top', '10px');
+                }else if (settings.arrowsPosition == 'topRight'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('right','70px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('top', '10px');
+                }else if (settings.arrowsPosition == 'bottomLeft'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('left','10px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('bottom', '20px');
+                }else if (settings.arrowsPosition == 'bottomRight'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('right','70px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-left').css('bottom', '20px');
+                }
+                $(this).children('#gre-arrows').children('#gre-arrow-left').css('padding','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').css('width','30px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').css('height','30px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').css('z-index','3');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').css('cursor','pointer');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('position','absolute');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('background-color',settings.arrowColor);
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('width','18px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('top','30px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('left','12px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('height','3px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('border-radius','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('-webkit-border-radius','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('transform','rotate(50deg)');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#one').css('-webkit-transform','rotate(50deg)');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('position','absolute');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('background-color',settings.arrowColor);
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('width','18px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('top','18px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('left','12px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('height','3px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('border-radius','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('-webkit-border-radius','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('transform','rotate(-50deg)');
+                $(this).children('#gre-arrows').children('#gre-arrow-left').children('#two').css('-webkit-transform','rotate(-50deg)');
+
+                // Left arrow style
+                $(this).children('#gre-arrows').children('#gre-arrow-right').css('position','absolute');
+                if (settings.arrowsPosition == 'middleSides'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('right','-17px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('top', '50%');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('transform', 'translate(-50%, -50%)');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('-webkit-transform', 'translate(-50%, -50%)');
+                }else if (settings.arrowsPosition == 'topSides'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('right','20px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('top', '20px');
+                }else if (settings.arrowsPosition == 'bottomSides'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('right','20px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('bottom', '20px');
+                }else if (settings.arrowsPosition == 'topLeft'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('left','50px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('top', '10px');
+                }else if (settings.arrowsPosition == 'topRight'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('right','10px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('top', '10px');
+                }else if (settings.arrowsPosition == 'bottomLeft'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('left','50px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('bottom', '20px');
+                }else if (settings.arrowsPosition == 'bottomRight'){
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('right','20px');
+                    $(this).children('#gre-arrows').children('#gre-arrow-right').css('bottom', '20px');
+                }
+                $(this).children('#gre-arrows').children('#gre-arrow-right').css('padding','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').css('width','30px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').css('height','30px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').css('z-index','3');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').css('cursor','pointer');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('position','absolute');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('background-color',settings.arrowColor);
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('width','18px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('top','30px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('left','12px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('height','3px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('border-radius','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('-webkit-border-radius','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('transform','rotate(-50deg)');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#one').css('-webkit-transform','rotate(-50deg)');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('position','absolute');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('background-color',settings.arrowColor);
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('width','18px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('top','18px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('left','12px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('height','3px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('border-radius','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('-webkit-border-radius','5px');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('transform','rotate(50deg)');
+                $(this).children('#gre-arrows').children('#gre-arrow-right').children('#two').css('-webkit-transform','rotate(50deg)');
                 
 
                 var currentslider = 1;
@@ -541,6 +573,7 @@
                         main.children('#per-gre-slider:nth-child('+currentslider+')').delay(250).animate({width: '100%', height: '100%', left: '0', top: '0'}, 300);
                         main.children('#per-gre-slider:nth-child('+currentslider+')').fadeIn(500);
                         main.children('#per-gre-slider').css('transform','rotate(0deg)');
+                        main.children('#per-gre-slider').css('-webkit-transform','rotate(0deg)');
                         main.children('#gre-dots').children('#per-gre-dot').css('background-color', settings.dotsColor);
                         main.children('#gre-dots').children('#per-gre-dot:nth-child('+currentslider+')').css('background-color', settings.selectedDotsColor);
                     }else if (settings.animation == 'theater'){
