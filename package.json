@@ -1,0 +1,24 @@
+{
+  "name": "gre-slider",
+  "version": "1.0.0",
+  "description": "A professional image slider by GRE Development.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gre-dev/gre-slider.git"
+  },
+  "keywords": [
+    "image",
+    "slider",
+    "gre"
+  ],
+  "author": "GRE Development <github@gredev.net> (https://www.gredev.net/en)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gre-dev/gre-slider/issues"
+  },
+  "homepage": "https://github.com/gre-dev/gre-slider#readme"
+}
